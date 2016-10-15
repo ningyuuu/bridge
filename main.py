@@ -17,12 +17,18 @@ class Deck:
         random.shuffle(self.contents)
 
     def printDeck(self):
+        print("Deck contents:")
         for card in self.contents:
             print(card.number, end="")
             print(card.suit, end=" ")
+        print(" ")
+
+    def dealCard(self, player, count=1):
+        for i in range(0, count):
+            player.receiveCard(self.contents[0])
+            self.contents.pop(0)
 
 class Player:
-
     hand = []
 
     def __init__(self, id):
@@ -36,7 +42,18 @@ class Player:
         hand.pop(index)
         return card
 
+    def showHand(self):
+        print("Player ID", self.id, "hand:")
+        for card in self.hand:
+            print(card.number, end="")
+            print(card.suit, end=" ")
+        print(" ")
+
 
 deck = Deck()
-deck.shuffleDeck()
+player = Player(0)
+deck.dealCard(player)
+deck.dealCard(player)
+deck.dealCard(player)
 deck.printDeck()
+player.showHand()
