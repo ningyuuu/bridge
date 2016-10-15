@@ -49,6 +49,15 @@ class Player:
             print(card.suit, end=" ")
         print(" ")
 
+class Game:
+    def __init__(self, deck, playerOne, playerTwo, playerThree, playerFour):
+        self.deck = deck
+        self.p1 = playerOne
+        self.p2 = playerTwo
+        self.p3 = playerThree
+        self.p4 = playerFour
+
+    
 
 deck = Deck()
 player = Player(0)
