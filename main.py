@@ -52,12 +52,27 @@ class Player:
 class Game:
     def __init__(self, deck, playerOne, playerTwo, playerThree, playerFour):
         self.deck = deck
-        self.p1 = playerOne
-        self.p2 = playerTwo
-        self.p3 = playerThree
-        self.p4 = playerFour
+        self.players[0] = playerOne
+        self.players[1] = playerTwo
+        self.players[2] = playerThree
+        self.players[3] = playerFour
 
-    
+    def startBidPhase(self):
+        bidPhase = new bidPhase(self.players)
+        bidPhase.startBidding()
+
+class BidPhase:
+    def __init__(self, players):
+        self.players = players
+
+    def generateConclusion(self):
+        return 'C', 0
+
+    def startBidding(self):
+        print(0)
+
+
+
 
 deck = Deck()
 player = Player(0)
