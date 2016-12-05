@@ -1,17 +1,42 @@
 import random
+from enum import Enum
+
+class Suit(Enum):
+    Clubs = 0
+    Diamonds = 1
+    Hearts = 2
+    Spades = 3
+
+class Number(Enum):
+    Ace = 1
+    Two = 2
+    Three = 3
+    Four = 4
+    Five = 5
+    Six = 6
+    Seven = 7
+    Eight = 8
+    Nine = 9
+    Ten = 10
+    Jack = 11
+    Queen = 12
+    King = 13
 
 class Card:
     def __init__(self, number, suit):
-        self.number = number
-        self.suit = suit
+        self.number = Number(number)
+        self.suit = Suit(suit)
+
+    def getCard(self):
+        return (self.number.name + ' of ' + self.suit.name)
 
 class Deck:
     contents = []
 
     def __init__(self):
-        for num in range(1,14):
-            for suit in ['H', 'D', 'C', 'S']:
-                self.contents.append(Card(num, suit))
+        for num in Number:
+            for suit in Suit:
+                self.contents.append(Card(num.value, suit.value))
 
     def shuffleDeck(self):
         random.shuffle(self.contents)
@@ -19,20 +44,21 @@ class Deck:
     def printDeck(self):
         print("Deck contents:")
         for card in self.contents:
-            print(card.number, end="")
-            print(card.suit, end=" ")
+            print(card.getCard())
         print(" ")
 
-    def dealCard(self, player, count=1):
-        for i in range(0, count):
-            player.receiveCard(self.contents[0])
-            self.contents.pop(0)
+    def dealCard(self, player):
+        player.receiveCard(self.contents[0])
+        self.contents.pop(0)
+
+    def isEmpty(self):
+        print('isEmpty check:' + str(len(self.contents)))
+        return len(self.contents) == 0
 
 class Player:
-    hand = []
-
     def __init__(self, id):
         self.id = id
+        self.hand = []
 
     def receiveCard(self, card):
         self.hand.append(card)
@@ -42,24 +68,14 @@ class Player:
         hand.pop(index)
         return card
 
+    def sortHand(self):
+        print("LUL")
+
     def showHand(self):
         print("Player ID", self.id, "hand:")
         for card in self.hand:
-            print(card.number, end="")
-            print(card.suit, end=" ")
-        print(" ")
-
-class Game:
-    def __init__(self, deck, playerOne, playerTwo, playerThree, playerFour):
-        self.deck = deck
-        self.players[0] = playerOne
-        self.players[1] = playerTwo
-        self.players[2] = playerThree
-        self.players[3] = playerFour
-
-    def startBidPhase(self):
-        bidPhase = new bidPhase(self.players)
-        bidPhase.startBidding()
+            print(card.getCard())
+        print(' ')
 
 class BidPhase:
     def __init__(self, players):
@@ -70,14 +86,3 @@ class BidPhase:
 
     def startBidding(self):
         print(0)
-
-
-
-
-deck = Deck()
-player = Player(0)
-deck.dealCard(player)
-deck.dealCard(player)
-deck.dealCard(player)
-deck.printDeck()
-player.showHand()
